@@ -1,0 +1,16 @@
+{
+  "name": "workshop-starter-ts-static",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch",
+    "serve": "live-server --port=5173 --open=dist",
+    "dev": "concurrently \"npm:watch\" \"npm:serve\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "live-server": "^1.2.2",
+    "typescript": "^5.0.0"
+  }
+}

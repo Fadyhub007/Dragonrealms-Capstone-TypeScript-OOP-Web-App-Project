@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Character Forge - Workshop Starter</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Character Forge</h1>
+        <p>Fill the form and create characters — TypeScript + static site</p>
+      </header>
+
+      <section id="form-section" class="card">
+        <form id="char-form">
+          <label>Name: <input name="name" required /></label>
+          <label>Class: <input name="class" required /></label>
+          <label>Age: <input name="age" type="number" min="0" /></label>
+          <label>Special Ability: <input name="ability" /></label>
+
+          <div class="actions">
+            <button type="submit" id="create">Create Character</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="list-section">
+        <h2>Your Characters</h2>
+        <div id="characters" class="grid"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./dist/index.js"></script>
+  </body>
+</html>
