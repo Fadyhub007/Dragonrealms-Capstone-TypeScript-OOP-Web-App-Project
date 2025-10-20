@@ -10,6 +10,7 @@ class Character {
         this.ability = ability;
     }
 }
+const STORAGE_KEY = "dragonrealms_characters";
 // Grab DOM elements: the form where users enter character data, and the
 // container where created character cards will be inserted.
 const form = document.getElementById('char-form');
@@ -33,6 +34,25 @@ function escapeHtml(s) {
     // replaceAll requires ES2021+; if your tsconfig target is lower, use a
     // polyfill or a simple replace with regex.
     return s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+}
+function saveCharacters(characters) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(characters));
+    console.log('Saved to localStorage:', JSON.stringify(characters));
+}
+function loadCharacters() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+}
+function renderCharacters() {
+    if (!list)
+        return;
+    list.innerHTML = "";
+    const characters = loadCharacters();
+    characters.forEach(c => {
+        // Recreate as Character instance
+        const character = new Character(c.name, c.cls, c.age, c.ability);
+        list.appendChild(createCard(character));
+    });
 }
 // Wire up the form submit flow: when the user submits the form we:
 // 1. prevent the browser's default navigation
@@ -58,9 +78,16 @@ if (form && list) {
         }
         // Instantiate a Character and render it
         const character = new Character(name, cls, age, ability);
-        const card = createCard(character);
-        list.prepend(card);
+        // Load existing characters
+        const characters = loadCharacters();
+        // Add the new one to the start
+        characters.unshift(character);
+        // Save updated list
+        saveCharacters(characters);
+        // Re-render list
+        renderCharacters();
         // Clear the form so the user can add another character quickly
         form.reset();
     });
 }
+renderCharacters();
